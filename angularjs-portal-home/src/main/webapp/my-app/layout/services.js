@@ -38,6 +38,26 @@ define(['angular', 'jquery'], function(angular, $) {
             });
         };
         
+        var removeFromHomeFName = function removeFromHomeFunction(portlet) {
+            var fname = portlet.fname;
+            return $.ajax({
+                url: SERVICE_LOC.base + "layout?action=removeElementByFname&fname=" + fname,
+                type: "POST",
+                data: null,
+                dataType: "json",
+                async: true,
+                success: function (request, text) {
+                    console.log("removed " + portlet.title + ' successfully.');
+                    miscService.pushGAEvent('Layout Modification', 'Remove', portlet.title);
+                    return true;
+                },
+                error: function (request, text, error) {
+                    console.warn('failed to remove app.');
+                    return false;
+                }
+            });
+        };
+        
         var removeFromHome = function removeFromHomeFunction(nodeId, title) {
             return $.ajax({
                 url: SERVICE_LOC.base + "layout?action=removeElement&elementID=" + nodeId,
@@ -192,6 +212,7 @@ define(['angular', 'jquery'], function(angular, $) {
             getNewStuffFeed : getNewStuffFeed,
             addToHome : addToHome,
             removeFromHome : removeFromHome,
+            removeFromHomeFName: removeFromHomeFName,
             getWidgetJson : getWidgetJson,
             getExclusiveMarkup : getExclusiveMarkup
         }

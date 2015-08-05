@@ -61,14 +61,15 @@ define(['angular', 'jquery'], function(angular, $) {
                 ret.success(function (request, text){
                     $('.fname-'+fname).html('<i class="fa fa-check"></i> Added Successfully').prop('disabled',true).removeClass('btn-add').addClass('btn-added');
                     $scope.$apply(function(){
-                        var marketplaceEntries = $.grep($sessionStorage.marketplace, function(e) { return e.fname === portlet.fname});
+                        var marketplaceEntries = $.grep($sessionStorage.marketplace, function(e) { 
+                            return e.fname === portlet.fname;
+                        });
                         if(marketplaceEntries.length > 0) {
                             marketplaceEntries[0].hasInLayout = true;
                         }
                         $rootScope.layout = null; //reset layout due to modifications
                         $sessionStorage.layout = null;
-                        $sessionStorage.marketplace = null;
-                        marketplaceService.getPortlets();
+                        
                     });
                 })
                     .error(function(request, text, error) {
@@ -76,28 +77,23 @@ define(['angular', 'jquery'], function(angular, $) {
                     });
             };
 
-            this.removeFromHome = function removePortletFunction(nodeId, title) {
-               layoutService.removeFromHome(nodeId, title).success(function(){
+            this.removeFromHome = function removePortletFunction(portlet) {
+               layoutService.removeFromHomeFName(portlet).success(function(){
                    $scope.$apply(function(request, text){
-                       var result = $.grep($scope.layout, function(e) { return e.nodeId === nodeId});
-                       var index = $.inArray(result[0], $scope.layout);
-                       //remove
-                       $scope.layout.splice(index,1);
-                       console.log(result[0].fname);
+                       $rootScope.layout = null; //reset layout due to modifications
+                       $sessionStorage.layout = null;
                        if($sessionStorage.marketplace != null) {
-                           var marketplaceEntries = $.grep($sessionStorage.marketplace, function(e) { return e.fname === result[0].fname});
+                           var marketplaceEntries = $.grep($sessionStorage.marketplace, function(e) { 
+                               return e.fname === portlet.fname;
+                           });
                            if(marketplaceEntries.length > 0) {
                                marketplaceEntries[0].hasInLayout = false;
                            }
-                           $rootScope.layout = null; //reset layout due to modifications
-                           $sessionStorage.layout = null;
-                           $sessionStorage.marketplace = null;
-                           marketplaceService.getPortlets();
                        }
                    });
                }).error(
                function(request, text, error){
-                   alert('Issue deleting ' + title + ' from your list of favorites, try again later.');
+                   alert('Issue deleting ' + portlet.title + ' from your list of favorites, try again later.');
                });
             };
 
