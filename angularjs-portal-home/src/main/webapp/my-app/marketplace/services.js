@@ -135,13 +135,16 @@ define(['angular', 'jquery'], function(angular, $) {
         //private functions
 
         var processInLayout = function(portlet, layout) {
-          var inLayout = $.grep(layout, function(e) { return e.fname === portlet.fname}).length;
-          if(inLayout > 0) {
+          var inLayout = $.grep(layout, function(e) { 
+              return e.fname === portlet.fname;
+              });
+          if(inLayout.length > 0) {
+              portlet.nodeId = inLayout[0].nodeId;
               portlet.hasInLayout = true;
           } else {
               portlet.hasInLayout = false;
           }
-        }
+        };
 
         var postProcessing = function(result, data) {
 
