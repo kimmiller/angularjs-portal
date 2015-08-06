@@ -67,6 +67,8 @@ define(['angular', 'jquery'], function(angular, $) {
                         }
                         $rootScope.layout = null; //reset layout due to modifications
                         $sessionStorage.layout = null;
+                        $sessionStorage.marketplace = null;
+                        marketplaceService.getPortlets();
                     });
                 })
                     .error(function(request, text, error) {
@@ -75,26 +77,22 @@ define(['angular', 'jquery'], function(angular, $) {
             };
 
             this.removeFromHome = function removePortletFunction(nodeId, title) {
-               console.log(nodeId);
-               console.log(title);
                layoutService.removeFromHome(nodeId, title).success(function(){
-                   console.log('It worked!');
-                   console.log(title);
                    $scope.$apply(function(request, text){
                        var result = $.grep($scope.layout, function(e) { return e.nodeId === nodeId});
-                       console.log(result);
                        var index = $.inArray(result[0], $scope.layout);
                        //remove
                        $scope.layout.splice(index,1);
+                       console.log(result[0].fname);
                        if($sessionStorage.marketplace != null) {
                            var marketplaceEntries = $.grep($sessionStorage.marketplace, function(e) { return e.fname === result[0].fname});
-                           console.log('e.fname:');
-                           console.log(e.fname);
-                           console.log('Result[0].fname');
-                           console.log(result[0].fname);
                            if(marketplaceEntries.length > 0) {
                                marketplaceEntries[0].hasInLayout = false;
                            }
+                           $rootScope.layout = null; //reset layout due to modifications
+                           $sessionStorage.layout = null;
+                           $sessionStorage.marketplace = null;
+                           marketplaceService.getPortlets();
                        }
                    });
                }).error(
@@ -103,25 +101,6 @@ define(['angular', 'jquery'], function(angular, $) {
                });
             };
 
-            // this.removeFromHome = function removeFromHomeFunction(index, portlet) {
-            //      console.log(index);
-            //      console.log(portlet);
-            //     var ret = layoutService.removeFromHome(portlet);
-            //     ret.success(function(request, text){
-            //         $('.fname-'+fname).html('<i class="fa fa-plus"></i> Removed Successfully').prop('disabled',false).removeClass('btn-removed').addClass('btn-remove');
-            //     $scope.$apply(function(){
-            //             var marketplaceEntries = $.grep($sessionStorage.marketplace, function(e) { return e.fname === portlet.fname});
-            //             if(marketplaceEntries.length > 0) {
-            //                 marketplaceEntries[0].hasInLayout = false;
-            //             }
-            //             $rootScope.layout = null; //reset layout due to modifications
-            //             $sessionStorage.layout = null;
-            //         });
-            //     })
-            //         .error(function(request, text, error) {
-            //             $('.fname-'+fname).parent().append('<span>Issue removing from home, please try again later</span>');
-            //         });
-            // };
 
             $scope.openRating = function (size, fname, name) {
                 var modalInstance = $modal.open({
