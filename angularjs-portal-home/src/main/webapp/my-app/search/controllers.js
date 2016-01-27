@@ -41,8 +41,8 @@ define(['angular', 'portal/search/controllers', 'my-app/marketplace/controllers'
     }]);
     
     app.controller('SearchResultController', 
-     ['$scope', '$controller','marketplaceService', 'googleCustomSearchService',
-     function($scope, $controller,marketplaceService, googleCustomSearchService) {
+     ['$scope', '$controller','marketplaceService', 'googleCustomSearchService', 'wiscDirectorySearchService',
+     function($scope, $controller,marketplaceService, googleCustomSearchService, wiscDirectorySearchService) {
       var base = $controller('marketplaceCommonFunctions', {$scope : $scope});
 
       var initWiscEduSearch = function(){
@@ -56,10 +56,22 @@ define(['angular', 'portal/search/controllers', 'my-app/marketplace/controllers'
         );
       };
 
+      var initWiscDirectorySearch = function(){
+          wiscDirectorySearchService.wiscDirectorySearch($scope.searchTerm).then(
+            function(results){
+              if(results && results.records && results.count) {
+                $scope.wiscDirectoryResults = results.records;
+                $scope.wiscDirectoryResultCount = results.count;
+              }
+            }
+          );
+        };
+
       var init = function(){
         $scope.sortParameter = ['-rating','-userRated'];
         $scope.myuwResults = [];
         $scope.googleResults = [];
+        $scope.wiscDirectoryResults = [];
         $scope.googleResultsEstimatedCount = 0;
         $scope.totalCount = 0;
         $scope.searchResultLimit = 20;
@@ -84,6 +96,9 @@ define(['angular', 'portal/search/controllers', 'my-app/marketplace/controllers'
       if(googleCustomSearchService.googleSearchEnabled()){
         initWiscEduSearch();
       }
+      if(wiscDirectorySearchService.wiscDirectorySearchEnabled()){
+          initWiscDirectorySearch();
+        }
     }]);
 
     return app;
