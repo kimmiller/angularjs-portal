@@ -59,9 +59,17 @@ define(['angular', 'portal/search/controllers', 'my-app/marketplace/controllers'
       var initWiscDirectorySearch = function(){
           wiscDirectorySearchService.wiscDirectorySearch($scope.searchTerm).then(
             function(results){
-              if(results && results.records && results.count) {
-                $scope.wiscDirectoryResults = results.records;
-                $scope.wiscDirectoryResultCount = results.count;
+              if(results){
+                if(results.records && results.count) {
+                  $scope.wiscDirectoryResults = results.records;
+                  $scope.wiscDirectoryResultCount = results.count;
+                }
+                if(results.errors && results.errors[0] && results.errors[0].code && results.errors[1] && results.errors[1].error_msg){
+                    if(results.errors[0].code == 4){
+                        $scope.wiscDirectoryTooManyResults = true;
+                    }
+                    $scope.wiscDirectoryErrorMessage= results.errors[1].error_msg;
+                }
               }
             }
           );
@@ -73,6 +81,7 @@ define(['angular', 'portal/search/controllers', 'my-app/marketplace/controllers'
         $scope.googleResults = [];
         $scope.wiscDirectoryResults = [];
         $scope.wiscDirectoryResultCount = 0;
+        $scope.wiscDirectoryTooManyResults = false;
         $scope.googleResultsEstimatedCount = 0;
         $scope.totalCount = 0;
         $scope.searchResultLimit = 20;
