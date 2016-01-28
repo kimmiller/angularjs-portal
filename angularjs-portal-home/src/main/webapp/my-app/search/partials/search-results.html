@@ -52,16 +52,38 @@
     <loading-gif data-object='wiscDirectoryResults' data-empty='wiscDirectoryTooManyResults'></loading-gif>
     <div ng-repeat="item in wiscDirectoryResults | limitTo:3" class="result">
       <h4>{{item.fullName}}</h4>
+      <p ng-if="item.formalName">Also known as {{item.formalName}}</p>
       <p>
-        <a ng-repeat="email in item.emails" ng-href="mailto:{{email}}" target="_blank">{{email}}</a>
-        <span ng-if="item.formalName">Also known as {{item.formalName}}</span>
+        <a ng-repeat="email in item.emails" ng-href="mailto:{{email}}" target="_blank">{{email}}</a> 
+        <a ng-repeat="phone in item.phones" ng-href="tel:{{phone}}" target="_blank">{{phone}}</a>
       </p>
+      <div ng-if="showingDetails" class="result">
+        <div ng-if="item.address" class="moreDetails">
+          <p>{{item.address.room}}</p>
+          <p>{{item.address.streetAddress}}</p>
+          <p>{{item.address.cityStateZip}}</p>
+        </div>
+        <div ng-repeat="title in item.titles" class="moreDetails">
+          <p>Title: {{title.title}}</p>
+          <p>Division: {{title.division}}</p>
+          <p>Department: {{title.department}}</p>
+          <p>Unit: {{title.subdepartment}}</p>
+        </div>
+      </div>
+      <div ng-click="showingDetails=!showingDetails">
+        <p>
+          <a href="javascript:;" ng-if="item.titles[0] || item.address">
+            <span ng-if="!showingDetails">See More</span>
+            <span ng-if="showingDetails">See Less</span>
+          </a>
+        </p>
+      </div>
     </div>
     <div class="seeMoreResults">
       <p ng-if="wiscDirectoryResultCount>0">
         <a href="#">See all {{wiscDirectoryResultCount}} directory results</a>
       </p>
-      <p ng-if="wiscDirectoryTooManyResults">
+      <p ng-if="wiscDirectoryErrorMessage">
           {{wiscDirectoryErrorMessage}}
         </p>
     </div>
