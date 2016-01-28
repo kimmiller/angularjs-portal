@@ -50,7 +50,9 @@ define(['angular', 'portal/search/controllers', 'my-app/marketplace/controllers'
           function(results){
             if(results && results.responseData && results.responseData.results) {
               $scope.googleResults = results.responseData.results;
-              $scope.googleResultsEstimatedCount = results.responseData.cursor.estimatedResultCount;
+              if(results.responseData.cursor.estimatedResultCount){
+                  $scope.googleResultsEstimatedCount = results.responseData.cursor.estimatedResultCount;
+              }
             }
           }
         );
