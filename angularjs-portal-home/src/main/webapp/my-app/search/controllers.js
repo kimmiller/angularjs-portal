@@ -70,6 +70,7 @@ define(['angular', 'portal/search/controllers', 'my-app/marketplace/controllers'
                 if(results.errors[0].code == 4){
                   $scope.wiscDirectoryTooManyResults = true;
                 }
+                
                 $scope.wiscDirectoryErrorMessage= results.errors[1].error_msg;
               }
             }
