@@ -1,0 +1,21 @@
+{ "portlet" : {
+   "nodeId":"n777",
+   "title":"Weather",
+   "description":"Access the latest weather conditions and 5-day forecasts for the cities you select.",
+   "url":"/web/staticFeeds/weather.json",
+   "iconUrl":null,
+   "faIcon":"fa-sun-o",
+   "fname":"weather",
+   "target":null,
+   "widgetURL":"/web/staticFeeds/weather-multiple.json",
+   "widgetType":"weather",
+   "widgetTemplate":null,
+   "widgetConfig":{
+      "iconPrefix":"https://raw.githubusercontent.com/Jasig/WeatherPortlet/WeatherPortlet-1.1.3/src/main/webapp/images/accuweather/",
+      "iconPostfix":".png"
+   },
+   "staticContent":null,
+   "pithyStaticContent":null,
+   "altMaxUrl":false
+  }
+}

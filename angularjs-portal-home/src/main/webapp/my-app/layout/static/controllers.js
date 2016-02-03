@@ -172,6 +172,34 @@ define(['angular', 'jquery'], function(angular, $) {
 
                 return ret;
             };
+            
+            this.portletType = function portletType(portlet) {
+                if (portlet.widgetType) {
+                    if('option-link' === portlet.widgetType) {
+                        return "OPTION_LINK";
+                    } else if('weather' === portlet.widgetType) {
+                        return "WEATHER";
+                    } else if('generic' === portlet.widgetType) {
+                        return "GENERIC";
+                    } else if('rss' === portlet.widgetType) {
+                        return "RSS";
+                    } else if('list-of-links' === portlet.widgetType) {
+                        return "LOL";
+                    } else if ('search-with-links' === portlet.widgetType) {
+                        return "SWL";
+                    } else {
+                        return "WIDGET";
+                    }
+
+                }else if(portlet.pithyStaticContent != null) {
+                    return "PITHY";
+                } else if (portlet.staticContent != null
+                    && portlet.altMaxUrl == false) {
+                    return "SIMPLE";
+                } else {
+                    return "NORMAL";
+                }
+            };
 
             $scope.inFavorites = this.inLayout();
         }]);

@@ -58,11 +58,12 @@ define([
             when('/apps/details/:fname', marketplaceRoutes.details).
             when('/apps/search/:initFilter', searchRoutes.search).
             when('/compact', listRoute).
-            when('/expanded', widgetRoute).
+            when('/expanded', widgetRoute.widgetView).
             when('/notifications', notificationsRoute).
             when('/settings', portalSettingsRoute).
             when('/features', featuresRoute).
             when('/static/:fname', staticRoutes.staticMax).
+            when('/static/:fname/widget', widgetRoute.widgetFocus).
             when('/exclusive/:fname', staticRoutes.exclusiveMax).
             when('/about', aboutRoute).
             otherwise(layoutRoute);
