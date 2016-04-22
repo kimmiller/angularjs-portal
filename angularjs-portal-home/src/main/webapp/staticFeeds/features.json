@@ -57,5 +57,23 @@
       "shortDesc" : "If you want to follow NCAA tournaments search for sports in MyUW.",
       "endDate": 1459486800000
     }
+  },
+  {
+    "id": 4,
+    "title": "Wiscard Widget",
+    "description": "Get an up-to-date balance on your Wiscard account, add money to to your account, or report a stolen card.",
+    "img": "img/Wiscard Widget.png",
+    "learnMoreURL": "",
+    "groups" : "UW-Madison",
+    "goLiveYear": 2016,
+    "goLiveMonth": 5,
+    "goLiveDay": 3,
+    "isPopup" : false,
+    "isBuckyAnnouncement" : true,
+    "buckyAnnouncement" : {
+      "shortTitle" : "Wiscard Widget",
+      "shortDesc" : "Get your Wiscard balance, add money to your account or report a stolen card",
+      "endDate": 1475253059000
+    }
   }
 ]
